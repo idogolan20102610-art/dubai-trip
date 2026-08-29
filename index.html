@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<!--
+    קובץ זה: index.html
+    מה זה: דף נחיתה אישי לשכנוע אבא לטוס לדובאי. הרקע הוא תמונה אמיתית
+    שהדוד צילם. הדף כולל סיבות, תוכנית מסע, עלות משוערת, וכפתור קריאה לפעולה.
+-->
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אבא, בוא נטוס לדובאי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Assistant', Arial, sans-serif;
+        background: #0b0a08;
+        color: #f3ede2;
+        line-height: 1.6;
+    }
+    h1, h2, .display {
+        font-family: 'Frank Ruhl Libre', serif;
+    }
+    .gold { color: #d4af6a; }
+
+    /* --- הירו --- */
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        text-align: center;
+        padding: 40px 20px 70px;
+        background-image:
+            linear-gradient(180deg, rgba(6,5,4,0.25) 0%, rgba(6,5,4,0.55) 55%, rgba(6,5,4,0.96) 100%),
+            url('דובאי-רקע.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    .hero .eyebrow {
+        letter-spacing: 4px;
+        font-size: 13px;
+        color: #d4af6a;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+    }
+    .hero h1 {
+        font-size: clamp(34px, 8vw, 60px);
+        font-weight: 900;
+        line-height: 1.25;
+        margin-bottom: 18px;
+        text-shadow: 0 4px 30px rgba(0,0,0,0.6);
+    }
+    .hero p {
+        font-size: 18px;
+        color: #e6dfd0;
+        max-width: 480px;
+        margin: 0 auto 30px;
+    }
+    .scroll-hint {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #b8ac93;
+        letter-spacing: 1px;
+        animation: bob 2s infinite ease-in-out;
+    }
+    @keyframes bob {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(8px); }
+    }
+
+    section {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 70px 24px;
+    }
+    .section-title {
+        text-align: center;
+        font-size: clamp(26px, 5vw, 36px);
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+    .section-sub {
+        text-align: center;
+        color: #b8ac93;
+        max-width: 500px;
+        margin: 0 auto 44px;
+        font-size: 16px;
+    }
+
+    /* --- למה דובאי --- */
+    .reasons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+    @media (max-width: 560px) { .reasons { grid-template-columns: 1fr; } }
+    .reason-card {
+        background: linear-gradient(160deg, #171310, #0f0d0b);
+        border: 1px solid rgba(212,175,106,0.25);
+        border-radius: 16px;
+        padding: 26px 22px;
+    }
+    .reason-card .ic { font-size: 30px; margin-bottom: 12px; display: block; }
+    .reason-card h3 { font-size: 18px; margin-bottom: 8px; font-weight: 700; }
+    .reason-card p { font-size: 14px; color: #c9bfa9; }
+
+    /* --- מוזיאוני רכבים --- */
+    .museums { display: flex; flex-direction: column; gap: 14px; }
+    .museum-card {
+        background: linear-gradient(160deg, #171310, #0f0d0b);
+        border: 1px solid rgba(212,175,106,0.25);
+        border-radius: 14px;
+        padding: 18px 22px;
+    }
+    .museum-card .m-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 6px;
+    }
+    .museum-card h3 { font-size: 17px; font-weight: 700; }
+    .museum-card .rating { color: #d4af6a; font-size: 14px; white-space: nowrap; }
+    .museum-card .m-details { font-size: 13px; color: #b8ac93; line-height: 1.7; }
+    .museum-card .m-details b { color: #e6dfd0; }
+    .museum-card .m-details .closed { color: #e2604f; }
+
+    /* --- זמן איכות --- */
+    .quality-time {
+        text-align: center;
+        background: linear-gradient(180deg, rgba(212,175,106,0.08), transparent);
+    }
+    .quality-time p.big {
+        font-family: 'Frank Ruhl Libre', serif;
+        font-size: clamp(20px, 4vw, 26px);
+        line-height: 1.7;
+        color: #f3ede2;
+    }
+    .quality-time p.big .gold { font-weight: 700; }
+
+    /* --- תוכנית --- */
+    .itinerary { display: flex; flex-direction: column; gap: 14px; }
+    .day-row {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        background: rgba(212,175,106,0.05);
+        border-right: 3px solid #d4af6a;
+        border-radius: 8px;
+        padding: 16px 18px;
+    }
+    .day-num {
+        font-family: 'Frank Ruhl Libre', serif;
+        font-size: 24px;
+        color: #d4af6a;
+        font-weight: 700;
+        flex-shrink: 0;
+        min-width: 34px;
+    }
+    .day-row h4 { font-size: 16px; margin-bottom: 4px; }
+    .day-row p { font-size: 14px; color: #b8ac93; }
+
+    /* --- עלות --- */
+    .cost-box {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(212,175,106,0.25);
+        border-radius: 16px;
+        padding: 26px;
+    }
+    .cost-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        font-size: 15px;
+    }
+    .cost-row:last-child { border-bottom: none; }
+    .cost-row .amt { color: #d4af6a; font-weight: 700; font-family: 'Frank Ruhl Libre', serif; }
+    .cost-note {
+        margin-top: 16px;
+        font-size: 12px;
+        color: #8a8272;
+        line-height: 1.6;
+    }
+    .flight-fact {
+        margin-top: 18px;
+        font-size: 13px;
+        color: #b8ac93;
+        text-align: center;
+    }
+
+    /* --- קריאה לפעולה --- */
+    .cta {
+        text-align: center;
+        padding-bottom: 100px;
+    }
+    .cta h2 { margin-bottom: 14px; }
+    .cta p { color: #c9bfa9; margin-bottom: 30px; }
+    .flight-badge {
+        display: inline-block;
+        background: linear-gradient(90deg, #d4af6a, #f4dfa8);
+        color: #221b0f;
+        font-weight: 800;
+        font-size: 17px;
+        padding: 12px 26px;
+        border-radius: 30px;
+        margin-bottom: 22px;
+        box-shadow: 0 10px 26px rgba(212,175,106,0.35);
+        letter-spacing: 0.3px;
+    }
+    .cta-btn {
+        background: linear-gradient(90deg, #d4af6a, #f4dfa8);
+        color: #221b0f;
+        border: none;
+        padding: 18px 44px;
+        border-radius: 40px;
+        font-family: 'Frank Ruhl Libre', serif;
+        font-size: 19px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(212,175,106,0.35);
+    }
+    .cta-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+    .no-btn {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #b8ac93;
+        padding: 16px 32px;
+        border-radius: 40px;
+        font-family: 'Assistant', Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    @keyframes pop {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* --- ניעור מסך (כמו "לא" עם הראש) --- */
+    @keyframes shake-no {
+        0%, 100% { transform: translateX(0); }
+        15% { transform: translateX(-22px); }
+        30% { transform: translateX(18px); }
+        45% { transform: translateX(-14px); }
+        60% { transform: translateX(10px); }
+        75% { transform: translateX(-6px); }
+        90% { transform: translateX(3px); }
+    }
+    body.shake-no { animation: shake-no 0.6s ease; }
+
+    /* --- מודאל תשובה --- */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(6,5,4,0.8);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 1000;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+        background: linear-gradient(160deg, #1c1712, #100d0a);
+        border: 1px solid rgba(212,175,106,0.4);
+        border-radius: 20px;
+        padding: 34px 28px;
+        max-width: 340px;
+        width: 100%;
+        text-align: center;
+        animation: pop 0.3s ease;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .modal-text {
+        font-family: 'Frank Ruhl Libre', serif;
+        font-size: 21px;
+        font-weight: 700;
+        color: #f3ede2;
+        margin-bottom: 26px;
+        line-height: 1.5;
+    }
+    .modal-retry {
+        background: linear-gradient(90deg, #d4af6a, #f4dfa8);
+        color: #221b0f;
+        border: none;
+        padding: 13px 30px;
+        border-radius: 40px;
+        font-family: 'Frank Ruhl Libre', serif;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    footer {
+        text-align: center;
+        padding: 30px;
+        font-size: 13px;
+        color: #6f6858;
+    }
+</style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="eyebrow">הצעה רשמית ✦ אבא ובן ✦ טיול רכבים</div>
+    <h1>אבא, בוא נטוס<br><span class="gold">לדובאי</span></h1>
+    <p>לא סתם טיול - טיול רכבים. מוזיאוני על והשכרת רכב ספורט. הצעה אמיתית, עם תוכנית, עם מספרים - ורק צריך תשובה אחת.</p>
+    <div class="scroll-hint">↓ תמשיך לגלול</div>
+</div>
+
+<section>
+    <div class="section-title">למה דווקא דובאי - טיול רכבים</div>
+    <div class="section-sub">אין עיר בעולם עם יותר רכבי על לכל מ"ר - וזה בדיוק מה שהופך אותה לטיול המושלם בשבילנו</div>
+    <div class="reasons">
+        <div class="reason-card">
+            <span class="ic">🏎️</span>
+            <h3>השכרת רכב ספורט</h3>
+            <p>בדובאי אפשר פשוט לשכור רכב ספורט - למבורגיני, פרארי, מקלארן או רולס רויס - ליום, ולנסוע איתו ברחובות. אצלנו זה חלום, שם זה עסק שלם.</p>
+        </div>
+        <div class="reason-card">
+            <span class="ic">🏛️</span>
+            <h3>מוזיאוני רכבים</h3>
+            <p>אוספי רכבי אספנות ורכבי על מכל התקופות, במקום אחד. חובה לחובבי רכבים.</p>
+        </div>
+        <div class="reason-card">
+            <span class="ic">☕</span>
+            <h3>קפה ותצפית על רכבי על</h3>
+            <p>לשבת בבית קפה ליד הכביש ולראות למבורגיני ופרארי חולפות.</p>
+        </div>
+        <div class="reason-card">
+            <span class="ic">🌊</span>
+            <h3>ים וספורט ימי</h3>
+            <p>חוף עם ספורט ימי זול וזמין - כולל אופנועי ים.</p>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <div class="section-title">גלריות רכבי-על בדובאי - כניסה חינם</div>
+    <div class="section-sub">שואו-רומים אמיתיים עם למבורגיני, פרארי, בוגאטי וקניגסג - כולם בדובאי עצמה, אפשר סתם להיכנס ולהסתכל</div>
+    <div class="museums">
+        <div class="museum-card">
+            <div class="m-head"><h3>🏎️ F1RST Motors</h3><span class="rating">חינם</span></div>
+            <div class="m-details"><b>כתובת:</b> Danube Building, 409 Sheikh Zayed Rd, דובאי<br><b>שעות:</b> שני-חמישי 10:00-21:00, שישי 14:00-21:00, שבת 10:00-21:00 &nbsp;|&nbsp; <span class="closed">ראשון: סגור</span></div>
+        </div>
+        <div class="museum-card">
+            <div class="m-head"><h3>🏎️ Al Ain Class Motors - Koenigsegg UAE</h3><span class="rating">חינם</span></div>
+            <div class="m-details"><b>כתובת:</b> Al Rostamani Business Center, Sheikh Zayed Rd, דובאי<br><b>שעות:</b> שני-שבת 09:00-21:00 &nbsp;|&nbsp; <span class="closed">ראשון: סגור</span></div>
+        </div>
+        <div class="museum-card">
+            <div class="m-head"><h3>🏎️ VIP Motors</h3><span class="rating">חינם</span></div>
+            <div class="m-details"><b>כתובת:</b> Sheikh Zayed Road, דובאי<br><b>שעות:</b> שני-חמישי 10:00-21:00, שישי 14:00-21:00, שבת 10:00-21:00 &nbsp;|&nbsp; <span class="closed">ראשון: סגור</span></div>
+        </div>
+        <div class="museum-card">
+            <div class="m-head"><h3>🏎️ Exotic Cars Dubai</h3><span class="rating">חינם</span></div>
+            <div class="m-details"><b>כתובת:</b> MSM 1 Building, Al Safa First, Sheikh Zayed Road, דובאי<br><b>שעות:</b> שני-שבת 10:00-20:00, ראשון 11:00-18:00</div>
+        </div>
+        <div class="museum-card">
+            <div class="m-head"><h3>🏎️ The Elite Cars</h3><span class="rating">חינם</span></div>
+            <div class="m-details"><b>כתובת:</b> 4th St, Al Quoz Industrial Area 3, דובאי<br><b>שעות:</b> שני-שבת 09:00-21:00, ראשון 15:00-20:00</div>
+        </div>
+    </div>
+</section>
+
+<section class="quality-time">
+    <p class="big">בעוד כמה שנים אני אהיה עסוק בלימודים, בצבא, בחיים שלי.<br>
+    <span class="gold">הטיול הזה הוא לא רק על דובאי</span> - הוא על זמן שלנו, שניים, לפני שהוא נהיה נדיר.</p>
+</section>
+
+
+<section class="cta">
+    <h2 class="display">אז מה אתה אומר?</h2>
+    <div class="flight-badge">✈️ הטיסות עליי</div>
+    <p>אתה רק צריך להגיד כן.</p>
+    <div class="cta-buttons">
+        <button class="cta-btn" onclick="respond('yes')">כן, תתחיל לארוז! 🧳</button>
+        <button class="no-btn" onclick="respond('no')">לא כרגע 😢</button>
+    </div>
+</section>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+    <div class="modal-box">
+        <div class="modal-text" id="modalText"></div>
+        <button class="modal-retry" id="modalRetry" onclick="closeModal()">נסה שוב</button>
+    </div>
+</div>
+
+<footer>נבנה באהבה על ידי הבן שלך 🧡</footer>
+
+<script>
+function respond(choice) {
+    var text = choice === "yes"
+        ? "🎉 יאללה! בואו נבדוק תאריכים!"
+        : "😢 חבל... אולי תחשוב על זה עוד קצת?";
+    document.getElementById("modalText").textContent = text;
+    document.getElementById("modalRetry").style.display = (choice === "yes") ? "none" : "inline-block";
+    document.getElementById("modalOverlay").classList.add("show");
+
+    if (choice === "no") {
+        document.body.classList.remove("shake-no");
+        void document.body.offsetWidth; // איתחול האנימציה מחדש אם היא כבר רצה
+        document.body.classList.add("shake-no");
+        setTimeout(function() {
+            document.body.classList.remove("shake-no");
+        }, 650);
+    }
+}
+
+function closeModal() {
+    document.getElementById("modalOverlay").classList.remove("show");
+}
+</script>
+
+</body>
+</html>
